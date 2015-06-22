@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical"
+    android:id="@+id/schema_options2">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/setupProgress"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/new_symptom"
+        android:clickable="true"
+        android:background="#ffffffff">
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Add variables to track"
+            android:id="@+id/schema_text_add_symptom"
+            android:layout_margin="6dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="right" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/schema_add_symptom"
+            android:clickable="false"
+            android:padding="8dp"
+            android:layout_gravity="left|center_vertical"
+            android:scaleType="fitXY"
+            android:background="#ffffffff"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Previous"
+            android:id="@+id/page1button"
+            android:layout_gravity="left"
+            android:onClick="setupMenu"
+            android:layout_weight="1"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Continue"
+            android:id="@+id/page3button"
+            android:layout_gravity="right"
+            android:onClick="setupPage3"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/sv1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:fadeScrollbars="false"
+        android:layout_weight="1">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/schema_options2_list"></LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

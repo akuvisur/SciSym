@@ -1,0 +1,8 @@
+[
+	{
+        "label": "Headache",
+		"desc": "Head hurts",
+		"class": "General",
+	  	"severity": 0
+	}
+]

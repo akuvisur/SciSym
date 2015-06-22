@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".LaunchScreen">
+    <item
+        android:id="@+id/symptoms"
+        android:title="Symptoms">
+    </item>
+    <item
+        android:id="@+id/factors"
+        android:title="Factors">
+    </item>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings">
+    </item>
+</menu>
