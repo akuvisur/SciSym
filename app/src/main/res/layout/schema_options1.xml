@@ -51,14 +51,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Schema title"
+            android:text="Schema title:"
             android:id="@+id/schema_text_title"
-            android:width="130dp"/>
+            android:width="134dp"/>
 
         <EditText
             android:layout_width="226dp"
             android:layout_height="wrap_content"
-            android:id="@+id/schema_title" />
+            android:id="@+id/schema_title"
+            android:drawableRight="@drawable/warning"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -69,28 +71,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Database name"
+            android:text="Database name:"
             android:id="@+id/schema_text_id"
-            android:width="130dp"/>
+            android:width="134dp"
+            />
 
         <EditText
             android:layout_width="226dp"
             android:layout_height="wrap_content"
-            android:id="@+id/schema_id" />
+            android:id="@+id/schema_id"
+            android:drawableRight="@drawable/warning"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description"
+        android:text="Description:"
         android:id="@+id/schema_text_desc"
         android:layout_marginTop="6dp"/>
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
         android:id="@+id/schema_desc" />
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -101,20 +108,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Author name"
+            android:text="Author name:"
             android:id="@+id/schema_text_author"
-            android:width="130dp"/>
+            android:width="134dp"/>
 
         <EditText
             android:layout_width="226dp"
             android:layout_height="wrap_content"
-            android:id="@+id/schema_author" />
+            android:id="@+id/schema_author"
+            android:drawableRight="@drawable/warning"/>
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CONTINUE"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:text="continue"
         android:id="@+id/contbutton"
         android:layout_gravity="bottom|right"
         android:paddingLeft="6dp"
@@ -123,5 +131,5 @@
         android:layout_marginBottom="12dp"
         android:layout_marginRight="12dp"
         android:onClick="setupPage2"
-        style="@style/AppTheme" />
+        android:drawableRight="@drawable/forward"/>
 </LinearLayout>

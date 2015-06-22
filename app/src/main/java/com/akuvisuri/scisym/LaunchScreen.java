@@ -67,9 +67,6 @@ public class LaunchScreen extends ActionBarActivity {
         ProgressBar pb = (ProgressBar) findViewById(R.id.setupProgress);
         pb.setProgress(33);
 
-        ImageButton add = (ImageButton) findViewById(R.id.schema_add_symptom);
-        add.setImageResource(R.drawable.add);
-
         View addRow = findViewById(R.id.new_symptom);
         addRow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +86,6 @@ public class LaunchScreen extends ActionBarActivity {
 
         ProgressBar pb = (ProgressBar) findViewById(R.id.setupProgress);
         pb.setProgress(66);
-
-        ImageButton add = (ImageButton) findViewById(R.id.schema_add_factor);
-        add.setImageResource(R.drawable.add);
 
         View addRow = findViewById(R.id.new_factor);
         addRow.setOnClickListener(new View.OnClickListener() {

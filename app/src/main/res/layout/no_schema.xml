@@ -28,7 +28,8 @@
         android:layout_marginRight="64dp"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="setupMenu"/>
+        android:onClick="setupMenu"
+        android:drawableRight="@drawable/setup"/>
     <Button
         android:layout_width="260dp"
         android:layout_height="wrap_content"
@@ -40,7 +41,8 @@
         android:layout_marginRight="64dp"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="importSchema"/>
+        android:onClick="importSchema"
+        android:drawableRight="@drawable/_import"/>
     <Button
         android:layout_width="260dp"
         android:layout_height="wrap_content"
@@ -52,5 +54,6 @@
         android:layout_marginRight="64dp"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="useExisting"/>
+        android:onClick="useExisting"
+        android:drawableRight="@drawable/load"/>
 </LinearLayout>
