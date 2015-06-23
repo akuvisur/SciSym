@@ -1,8 +1,16 @@
-[
-	{
-        "label": "Headache",
-		"desc": "Head hurts",
-		"class": "General",
-	  	"severity": 0
-	}
-]
+{"list":
+  [
+    {
+      "label": "Headache",
+      "desc": "Head hurts",
+      "class": "General",
+      "severity": 0
+    },
+    {
+      "label": "Toothache",
+      "desc": "Teeth hurt",
+      "class": "Mouth",
+      "severity": 1
+    }
+  ]
+}

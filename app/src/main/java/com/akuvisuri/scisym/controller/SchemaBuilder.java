@@ -1,20 +1,20 @@
-package com.akuvisuri.scisym;
+package com.akuvisuri.scisym.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.akuvisuri.scisym.containers.MainUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Set;
 
 /**
  * Created by Aku on 22.6.2015.
  */
 public class SchemaBuilder {
-    static final String MyPREFERENCES = "SciSym";
+    protected static final String LOG = "SchemaBuilder.java";
     static SharedPreferences se;
 
     public static JSONArray symptoms;
@@ -22,15 +22,15 @@ public class SchemaBuilder {
     public static JSONObject schemaOptions;
 
     public static void init() {
-        se = MainUtils.c.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        se = MainUtils.c.getSharedPreferences(MainUtils.MyPREFERENCES, Context.MODE_PRIVATE);
         if (se != null) {
             try {
                 schemaOptions = new JSONObject(se.getString("options", ""));
-                symptoms = new JSONArray(se.getString("symptoms", ""));
+                symptoms = new JSONObject(se.getString("symptoms", "")).getJSONArray("list");
                 factors = new JSONArray(se.getString("factors", ""));
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.d("SCHEMA", "Could not convert JSON string");
+                Log.d(LOG, "Could not convert JSON string");
             }
         }
     }
@@ -40,7 +40,7 @@ public class SchemaBuilder {
     }
 
     public static void save() {
-        se = MainUtils.c.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        se = MainUtils.c.getSharedPreferences(MainUtils.MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = se.edit();
         // add everything
         editor.commit();

@@ -1,28 +1,51 @@
 package com.akuvisuri.scisym;
 
-import android.graphics.Color;
+import android.app.Dialog;
+import android.app.ListActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
+import com.akuvisuri.scisym.containers.MainUtils;
+import com.akuvisuri.scisym.containers.Symptoms;
+import com.akuvisuri.scisym.controller.SchemaBuilder;
 import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
+import com.akuvisuri.scisym.view.SymptomSelector;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+import static android.widget.AdapterView.*;
 
 
 public class LaunchScreen extends ActionBarActivity {
+    protected final static String LOG = "LaunchScreen.java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // IMPORTANT
         MainUtils.setContext(getApplicationContext());
+
+        if (MainUtils.DEBUG) {
+            Symptoms.clear();
+        }
         SchemaBuilder.init();
+        Symptoms.init(this);
         if (SchemaBuilder.schemaOptions == null) {
             setContentView(R.layout.no_schema);
         }
@@ -71,9 +94,44 @@ public class LaunchScreen extends ActionBarActivity {
         addRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("UI", "sym click");
-                View symptomInfo = getLayoutInflater().inflate(R.layout.editor_symptom, null);
-                symptomList.addView(symptomInfo);
+                // TODO tämä ei päivity oikeen / tulee vasta seuravalla clickillä
+                addSymptoms();
+                symptomList.removeAllViews();
+                for (final Symptom s : MainUtils.selectedSymptoms) {
+                    Log.d(LOG, s.toString());
+                    final View symptomInfo = getLayoutInflater().inflate(R.layout.editor_symptom, null);
+                    TextView label = (TextView) symptomInfo.findViewById(R.id.symptom_label);
+                    TextView attr = (TextView) symptomInfo.findViewById(R.id.symptom_attr);
+                    label.setText(s.toString());
+                    attr.setText(s.attrToString());
+                    ImageView severeImage = (ImageView) symptomInfo.findViewById(R.id.symptom_severe);
+                    final ImageSwitcher rightImage = (ImageSwitcher) symptomInfo.findViewById(R.id.symptom_right_image);
+                    rightImage.setFactory(new ViewSwitcher.ViewFactory() {
+                        @Override
+                        public View makeView() {
+                            ImageView myView = new ImageView(MainUtils.c);
+                            myView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            myView.setLayoutParams(new ImageSwitcher.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+                            return myView;
+                        }
+                    });
+                    rightImage.setImageResource(R.drawable.delete);
+                    rightImage.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d(LOG, "clicked delete symptom");
+                            symptomList.removeView(symptomInfo);
+                            MainUtils.selectedSymptoms.remove(s);
+                        }
+                    });
+                    if (s.isSevere()) {
+                        severeImage.setImageResource(R.drawable.critical);
+                    }
+                    symptomList.addView(symptomInfo);
+                }
+                symptomList.invalidate();
             }
         });
     }
@@ -112,13 +170,13 @@ public class LaunchScreen extends ActionBarActivity {
 
     }
 
-    public Symptom addSymptom() {
-        Log.d("TEST", "addSymptom");
-        return new Symptom();
+    public void addSymptoms() {
+        Dialog addDialog = SymptomSelector.getInstance(this);
+        addDialog.show();
     }
 
     public Factor addFactor() {
-
         return new Factor();
     }
+
 }
