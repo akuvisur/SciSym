@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.akuvisuri.scisym.LaunchScreen;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 public class SymptomSelector {
     private static final String LOG = "SymptomSelector.java";
 
-    public static Dialog getInstance(Activity a) {
+    public static Dialog getInstance(final Activity a) {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         LayoutInflater inflater = a.getLayoutInflater();
 
@@ -39,6 +40,14 @@ public class SymptomSelector {
         }
         final SymptomListAdapter adapter = new SymptomListAdapter(MainUtils.c, symptoms);
         l.setAdapter(adapter);
+
+        Button addNew = (Button) dialogLayout.findViewById(R.id.add_symptom_create);
+        addNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SymptomCreator.show(a);
+            }
+        });
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout

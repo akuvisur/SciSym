@@ -63,13 +63,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="140dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Tracking:"
             android:id="@+id/symptom_creator_window_text"
             android:gravity="center_vertical|right"
-            android:drawableLeft="@drawable/warning"/>
+            android:drawableLeft="@drawable/warning"
+            />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
@@ -77,41 +78,47 @@
             android:orientation="horizontal"
             android:id="@+id/symptom_creator_rep_window">
             <LinearLayout
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
             <RadioButton android:id="@+id/symptom_creator_rep_1d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 / Day"/>
-            <RadioButton android:id="@+id/symptom_creator_rep_2d"
+                android:text="1 / Day"
+                android:textSize="10dp"/>
+                <RadioButton android:id="@+id/symptom_creator_rep_2d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 / Day"/>
+                android:text="2 / Day"
+                android:textSize="10dp" />
             <RadioButton android:id="@+id/symptom_creator_rep_3d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3 / Day"/>
+                android:text="3 / Day"
+                android:textSize="10dp"/>
             <RadioButton android:id="@+id/symptom_creator_rep_4d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4 / Day"/>
+                android:text="4 / Day"
+                android:textSize="10dp" />
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
             <RadioButton android:id="@+id/symptom_creator_rep_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weekly"/>
+                android:text="Weekly"
+                android:textSize="10dp" />
             <RadioButton android:id="@+id/symptom_creator_rep_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monthly"/>
+                android:text="Monthly"
+                android:textSize="10dp" />
             </LinearLayout>
         </RadioGroup>
 
@@ -124,9 +131,9 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
-            android:layout_width="140dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Input:"
             android:id="@+id/symptom_creator_input_text"
             android:gravity="center_vertical|right"
@@ -141,15 +148,18 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Scale"/>
+                android:text="Scale"
+                android:textSize="10dp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Text"/>
+                android:text="Text"
+                android:textSize="10dp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Numeric"/>
+                android:text="Numeric"
+                android:textSize="10dp" />
 
         </RadioGroup>
 
@@ -162,9 +172,9 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
-            android:layout_width="140dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Severity:"
             android:id="@+id/symptom_creator_severity_text"
             android:gravity="center_vertical|right"
@@ -179,29 +189,32 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Severe"/>
+                android:text="Severe"
+                android:textSize="10dp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Non-severe"/>
+                android:text="Non-severe"
+                android:textSize="10dp" />
 
         </RadioGroup>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center_horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Description:"
             android:id="@+id/symptom_creator_desc_text"
-            android:drawableBottom="@drawable/warning"/>
+            android:drawableLeft="@drawable/warning"
+            android:gravity="center_vertical|right"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -236,7 +249,8 @@
             android:id="@+id/symptom_creator_ok"
             android:layout_gravity="right"
             android:layout_weight="1"
-            android:drawableRight="@drawable/ok"/>
+            android:drawableRight="@drawable/ok"
+            android:enabled="false"/>
     </LinearLayout>
 
 </LinearLayout>
