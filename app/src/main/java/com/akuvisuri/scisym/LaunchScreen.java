@@ -20,11 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.controller.SchemaBuilder;
 import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
+import com.akuvisuri.scisym.view.FactorSelector;
 import com.akuvisuri.scisym.view.SymptomSelector;
 
 import org.w3c.dom.Text;
@@ -51,6 +53,7 @@ public class LaunchScreen extends ActionBarActivity {
         }
         SchemaBuilder.init();
         Symptoms.init(this);
+        Factors.init(this);
         if (SchemaBuilder.schemaOptions == null) {
             setContentView(R.layout.no_schema);
         }
@@ -185,8 +188,9 @@ public class LaunchScreen extends ActionBarActivity {
         addDialog.show();
     }
 
-    public Factor addFactors() {
-
+    public void addFactors() {
+        Dialog addDialog = FactorSelector.getInstance(this);
+        addDialog.show();
     }
 
 }

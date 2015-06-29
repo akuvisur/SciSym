@@ -10,9 +10,10 @@ import android.widget.ListView;
 
 import com.akuvisuri.scisym.LaunchScreen;
 import com.akuvisuri.scisym.R;
+import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
-import com.akuvisuri.scisym.view.adapters.SymptomListAdapter;
+import com.akuvisuri.scisym.view.adapters.FactorListAdapter;
 
 import java.util.ArrayList;
 
@@ -28,11 +29,11 @@ public class FactorSelector {
 
         View dialogLayout = inflater.inflate(R.layout.factor_selector, null);
         ListView l = (ListView) dialogLayout.findViewById(R.id.add_factor_list);
-        final ArrayList<String> symptoms = new ArrayList<String>();
-        for (String key : Symptoms.list.keySet()) {
-            symptoms.add(key);
+        final ArrayList<String> factors = new ArrayList<String>();
+        for (String key : Factors.list.keySet()) {
+            factors.add(key);
         }
-        final SymptomListAdapter adapter = new FactorListAdapter(MainUtils.c, symptoms);
+        final FactorListAdapter adapter = new FactorListAdapter(MainUtils.c, factors);
         l.setAdapter(adapter);
 
         // Inflate and set the layout for the dialog
@@ -43,7 +44,7 @@ public class FactorSelector {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         MainUtils.selectedFactors = adapter.getSelection();
-                        LaunchScreen.refreshSymptomList();
+                        LaunchScreen.refreshFactorList();
                         dialog.dismiss();
                     }
                 })

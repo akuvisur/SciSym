@@ -26,7 +26,7 @@ public class Factors {
 
     private static final String LOG = "Factors.java";
 
-    public static HashMap<String, Symptom> list = new HashMap<String, Symptom>();
+    public static HashMap<String, Factor> list = new HashMap<String, Factor>();
     public static SharedPreferences se;
 
     public static void init(Activity a) {
@@ -34,17 +34,25 @@ public class Factors {
         if (se != null) {
             try {
                 Log.d(LOG, "factors: " + se.getString("factors", null));
-                JSONArray symArr = new JSONObject(se.getString("factors", null)).getJSONArray("list");
-                Log.d(LOG, "array: " + symArr.toString());
-                for (int i = 0; i < symArr.length(); i++) {
-                    JSONObject jobj = symArr.getJSONObject(i);
+                JSONArray facArr = new JSONObject(se.getString("factors", null)).getJSONArray("list");
+                Log.d(LOG, "array: " + facArr.toString());
+                for (int i = 0; i < facArr.length(); i++) {
+                    JSONObject jobj = facArr.getJSONObject(i);
+                    Object obj = null;
+                    if (jobj.getString("type").equals("tracked")) {
+                        obj = jobj.getJSONObject("range");
+                    }
+                    else if (jobj.getString("type").equals("multiple")) {
+                        obj = jobj.getJSONArray("values");
+                    }
                     list.put(jobj.getString("label"),
-                            new Symptom(
-                                    jobj.getString("label"),
-                                    jobj.getString("desc"),
-                                    jobj.getString("class"),
-                                    jobj.getInt("severity")
-                            ));
+                            new Factor(
+                            jobj.getString("label"),
+                            jobj.getString("desc"),
+                            jobj.getString("type"),
+                            jobj.getString("rep_window"),
+                            obj
+                    ));
                 }
             } catch (JSONException e1) {
                 e1.printStackTrace();
@@ -52,7 +60,7 @@ public class Factors {
             }
             // if starting for the first time
             catch (NullPointerException e2) {
-                InputStream inputStream = a.getResources().openRawResource(R.raw.symptoms);
+                InputStream inputStream = a.getResources().openRawResource(R.raw.factors);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
                 int ctr;
@@ -68,27 +76,29 @@ public class Factors {
                 }
                 Log.v(LOG, inputStream.toString());
                 try {
-                    JSONArray symArr = new JSONObject(byteArrayOutputStream.toString()).getJSONArray("list");
-                    JSONObject _label;
-                    JSONObject _desc;
-                    JSONObject _class;
-                    JSONObject _severity;
-                    String cat_Id = "";
-                    String cat_name = "";
+                    JSONArray facArr = new JSONObject(byteArrayOutputStream.toString()).getJSONArray("list");
                     ArrayList<String[]> data = new ArrayList<String[]>();
-                    for (int i = 0; i < symArr.length(); i++) {
-                        JSONObject jobj = symArr.getJSONObject(i);
+                    for (int i = 0; i < facArr.length(); i++) {
+                        JSONObject jobj = facArr.getJSONObject(i);
+                        Object obj = null;
+                        if (jobj.getString("type").equals("tracked")) {
+                            obj = jobj.getJSONObject("range");
+                        }
+                        else if (jobj.getString("type").equals("multiple")) {
+                            obj = jobj.getJSONArray("values");
+                        }
                         list.put(jobj.getString("label"),
-                                new Symptom(
+                                new Factor(
                                         jobj.getString("label"),
                                         jobj.getString("desc"),
-                                        jobj.getString("class"),
-                                        jobj.getInt("severity")
+                                        jobj.getString("type"),
+                                        jobj.getString("rep_window"),
+                                        obj
                                 ));
                     }
                     SharedPreferences.Editor editor = se.edit();
                     JSONObject saved = new JSONObject();
-                    saved.put("list", symArr.toString());
+                    saved.put("list", facArr.toString());
                     editor.putString("factors", saved.toString());
                     editor.commit();
                 } catch (Exception se) {

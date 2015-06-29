@@ -29,7 +29,7 @@ public class SchemaBuilder {
                 schema = new JSONObject(se.getString("schema", ""));
                 schemaOptions = new JSONObject(se.getString("options", ""));
                 symptoms = new JSONObject(se.getString("symptoms", "")).getJSONArray("list");
-                factors = new JSONArray(se.getString("factors", ""));
+                factors = new JSONObject(se.getString("factors", "")).getJSONArray("list");
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d(LOG, "Could not convert JSON string");

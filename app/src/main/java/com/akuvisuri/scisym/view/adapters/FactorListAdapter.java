@@ -16,8 +16,7 @@ import android.widget.ViewSwitcher;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
-import com.akuvisuri.scisym.containers.Symptoms;
-import com.akuvisuri.scisym.trackables.Symptom;
+import com.akuvisuri.scisym.trackables.Factor;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ public class FactorListAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final ArrayList<String> values;
 
-    public static ArrayList<Symptom> selection = new ArrayList<Symptom>();
+    public static ArrayList<Factor> selection = new ArrayList<Factor>();
 
     public FactorListAdapter(Context context, ArrayList<String> values) {
         super(context, -1, values);
@@ -38,18 +37,17 @@ public class FactorListAdapter extends ArrayAdapter<String> {
         this.values = values;
     }
 
-    public ArrayList<Symptom> getSelection() {
+    public ArrayList<Factor> getSelection() {
         return selection;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.editor_symptom, parent, false);
+        View rowView = inflater.inflate(R.layout.editor_factor, parent, false);
 
-        TextView label = (TextView) rowView.findViewById(R.id.symptom_label);
-        TextView attr = (TextView) rowView.findViewById(R.id.symptom_attr);
-        ImageView severeImage = (ImageView) rowView.findViewById(R.id.symptom_severe);
-        final ImageSwitcher rightImage = (ImageSwitcher) rowView.findViewById(R.id.symptom_right_image);
+        TextView label = (TextView) rowView.findViewById(R.id.factor_label);
+        TextView attr = (TextView) rowView.findViewById(R.id.factor_attr);
+        final ImageSwitcher rightImage = (ImageSwitcher) rowView.findViewById(R.id.factor_right_image);
         rightImage.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -62,12 +60,12 @@ public class FactorListAdapter extends ArrayAdapter<String> {
             }
         });
 
-        Symptom thisSym = Symptoms.list.get(values.get(position));
-        label.setText(thisSym.toString());
+        Factor thisFact = Factors.list.get(values.get(position));
+        label.setText(thisFact.toString());
         label.setTextColor(Color.BLACK);
-        attr.setText(thisSym.attrToString());
+        attr.setText(thisFact.attrToString());
 
-        if (MainUtils.selectedSymptoms.contains(Symptoms.list.get(thisSym.toString()))) {
+        if (MainUtils.selectedFactors.contains(Factors.list.get(thisFact.toString()))) {
             rightImage.setImageResource(R.drawable.checkbox_selected);
         } else rightImage.setImageResource(R.drawable.checkbox_unselected);
 
@@ -75,10 +73,10 @@ public class FactorListAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 TextView label = (TextView) v.findViewById(R.id.factor_label);
-                if (selection.contains(Symptoms.list.get(label.getText()))) {
+                if (selection.contains(Factors.list.get(label.getText()))) {
                     Log.d(LOG, "removed " + Factors.list.get(label.getText()).toString());
                     rightImage.setImageResource(R.drawable.checkbox_unselected);
-                    selection.remove(selection.indexOf(Symptoms.list.get(label.getText())));
+                    selection.remove(selection.indexOf(Factors.list.get(label.getText())));
                 }
                 else {
                     Log.d(LOG, "selected " + Factors.list.get(label.getText()).toString());

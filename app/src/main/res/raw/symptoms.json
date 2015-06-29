@@ -6,7 +6,8 @@
       "desc": "Head hurts",
       "class": "General",
       "severity": 0,
-      "input": "scale"
+      "input": "scale",
+      "type": "repeating"
     },
     {
       "label": "Toothache",
@@ -14,7 +15,8 @@
       "desc": "Teeth hurt",
       "class": "Mouth",
       "severity": 1,
-      "input": "scale"
+      "input": "scale",
+      "type": "repeating"
     }
   ]
 }

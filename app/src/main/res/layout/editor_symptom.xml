@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Name of the symptom"
+            android:textColor="#ff000000"
             android:id="@+id/symptom_label" />
 
         <TextView
@@ -29,7 +30,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="attributes"
-            android:id="@+id/symptom_attr" />
+            android:id="@+id/symptom_attr"
+            android:textColor="#ff000000" />
 
     </LinearLayout>
 

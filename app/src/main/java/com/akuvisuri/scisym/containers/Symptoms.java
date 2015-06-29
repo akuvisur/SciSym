@@ -41,7 +41,10 @@ public class Symptoms {
                                     jobj.getString("label"),
                                     jobj.getString("desc"),
                                     jobj.getString("class"),
-                                    jobj.getInt("severity")
+                                    jobj.getInt("severity"),
+                                    jobj.getString("type"),
+                                    jobj.getString("input"),
+                                    jobj.getString("rep_window")
                             ));
                 }
             } catch (JSONException e1) {
@@ -64,16 +67,9 @@ public class Symptoms {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.v(LOG, inputStream.toString());
+                Log.v(LOG, "stream" + inputStream.toString());
                 try {
                     JSONArray symArr = new JSONObject(byteArrayOutputStream.toString()).getJSONArray("list");
-                    JSONObject _label;
-                    JSONObject _desc;
-                    JSONObject _class;
-                    JSONObject _severity;
-                    String cat_Id = "";
-                    String cat_name = "";
-                    ArrayList<String[]> data = new ArrayList<String[]>();
                     for (int i = 0; i < symArr.length(); i++) {
                         JSONObject jobj = symArr.getJSONObject(i);
                         list.put(jobj.getString("label"),
@@ -81,7 +77,10 @@ public class Symptoms {
                                         jobj.getString("label"),
                                         jobj.getString("desc"),
                                         jobj.getString("class"),
-                                        jobj.getInt("severity")
+                                        jobj.getInt("severity"),
+                                        jobj.getString("type"),
+                                        jobj.getString("input"),
+                                        jobj.getString("rep_window")
                                 ));
                     }
                     SharedPreferences.Editor editor = se.edit();
@@ -111,6 +110,7 @@ public class Symptoms {
         editor.remove("symptoms");
         editor.remove("options");
         editor.remove("factors");
+        editor.remove("schema");
         editor.commit();
     }
 }

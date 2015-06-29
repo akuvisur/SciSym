@@ -6,34 +6,40 @@
     android:background="#ffffffff"
     android:padding="6dp">
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/factor_info"
+        android:layout_margin="6dp"
+        />
+
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="300dp"
+        android:layout_width="180dp"
         android:layout_height="60dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Name of the symptom"
-            android:id="@+id/symptom_label" />
+            android:text="Name of the factor"
+            android:textColor="#FF000000"
+            android:id="@+id/factor_label" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="attributes"
-            android:id="@+id/symptom_attr" />
+            android:textColor="#FF000000"
+            android:id="@+id/factor_attr" />
 
     </LinearLayout>
 
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/imageButton"
+    <ImageSwitcher
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/factor_right_image"
         android:background="#ffffffff"
-        android:onClick="removeSymptom"
-        android:padding="20dp"
-        android:scaleType="fitXY"
-        android:drawable="@drawable/delete"/>
+        android:padding="6dp" />
 
 </LinearLayout>

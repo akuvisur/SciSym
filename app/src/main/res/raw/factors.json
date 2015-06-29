@@ -1,4 +1,4 @@
-[
+{"list": [
   {
     "label": "Drinking",
     "type": "tracked",
@@ -44,4 +44,4 @@
     ],
     "desc": "Daily food consumption"
   }
-]
+]}
