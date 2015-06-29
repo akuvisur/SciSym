@@ -2,15 +2,19 @@
   [
     {
       "label": "Headache",
+      "rep_window" : "daily:1",
       "desc": "Head hurts",
       "class": "General",
-      "severity": 0
+      "severity": 0,
+      "input": "scale"
     },
     {
       "label": "Toothache",
+      "rep_window" : "daily:1",
       "desc": "Teeth hurt",
       "class": "Mouth",
-      "severity": 1
+      "severity": 1,
+      "input": "scale"
     }
   ]
 }

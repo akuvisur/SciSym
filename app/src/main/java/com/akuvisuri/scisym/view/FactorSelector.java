@@ -4,40 +4,35 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.akuvisuri.scisym.LaunchScreen;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
-import com.akuvisuri.scisym.trackables.Symptom;
 import com.akuvisuri.scisym.view.adapters.SymptomListAdapter;
 
 import java.util.ArrayList;
 
 /**
- * Created by Aku on 23.6.2015.
+ * Created by Aku on 29.6.2015.
  */
-public class SymptomSelector {
-    private static final String LOG = "SymptomSelector.java";
+public class FactorSelector {
+    private static final String LOG = "FactorSelector.java";
 
     public static Dialog getInstance(Activity a) {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         LayoutInflater inflater = a.getLayoutInflater();
 
-        View dialogLayout = inflater.inflate(R.layout.symptom_selector, null);
-        ListView l = (ListView) dialogLayout.findViewById(R.id.add_symptom_list);
+        View dialogLayout = inflater.inflate(R.layout.factor_selector, null);
+        ListView l = (ListView) dialogLayout.findViewById(R.id.add_factor_list);
         final ArrayList<String> symptoms = new ArrayList<String>();
         for (String key : Symptoms.list.keySet()) {
             symptoms.add(key);
         }
-        final SymptomListAdapter adapter = new SymptomListAdapter(MainUtils.c, symptoms);
+        final SymptomListAdapter adapter = new FactorListAdapter(MainUtils.c, symptoms);
         l.setAdapter(adapter);
 
         // Inflate and set the layout for the dialog
@@ -47,7 +42,7 @@ public class SymptomSelector {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        MainUtils.selectedSymptoms = adapter.getSelection();
+                        MainUtils.selectedFactors = adapter.getSelection();
                         LaunchScreen.refreshSymptomList();
                         dialog.dismiss();
                     }
@@ -60,5 +55,4 @@ public class SymptomSelector {
                 });
         return builder.create();
     }
-
 }

@@ -2,6 +2,46 @@
   {
     "label": "Drinking",
     "type": "tracked",
+    "rep_window" : "daily:1",
+    "range": {
+      "range": "0:12",
+      "unit": "drink"
+    },
     "desc": "How many drinks you've had per day"
+  },
+  {
+    "label": "Weather",
+    "rep_window" : "daily:1",
+    "type": "automated",
+    "desc": "Daily weather"
+  },
+  {
+    "label": "Jogging",
+    "rep_window" : "daily:1",
+    "type": "automated",
+    "desc": "Daily activity - Jogging and running"
+  },
+  {
+    "label": "Bicycling",
+    "rep_window" : "daily:1",
+    "type": "automated",
+    "desc": "Daily activity - bicycling"
+  },
+  {
+    "label": "Eating",
+    "rep_window" : "daily:1",
+    "type": "multiple",
+    "values": [
+      {
+        "value": "Meat", "icon": "meat"
+      },
+      {
+        "value": "Potato", "icon": "potato"
+      },
+      {
+        "value": "Vegetables", "icon": "vegetable"
+      }
+    ],
+    "desc": "Daily food consumption"
   }
 ]

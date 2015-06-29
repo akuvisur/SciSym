@@ -17,6 +17,7 @@ public class SchemaBuilder {
     protected static final String LOG = "SchemaBuilder.java";
     static SharedPreferences se;
 
+    public static JSONObject schema;
     public static JSONArray symptoms;
     public static JSONArray factors;
     public static JSONObject schemaOptions;
@@ -25,6 +26,7 @@ public class SchemaBuilder {
         se = MainUtils.c.getSharedPreferences(MainUtils.MyPREFERENCES, Context.MODE_PRIVATE);
         if (se != null) {
             try {
+                schema = new JSONObject(se.getString("schema", ""));
                 schemaOptions = new JSONObject(se.getString("options", ""));
                 symptoms = new JSONObject(se.getString("symptoms", "")).getJSONArray("list");
                 factors = new JSONArray(se.getString("factors", ""));
