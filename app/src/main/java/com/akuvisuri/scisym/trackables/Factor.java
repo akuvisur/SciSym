@@ -1,6 +1,7 @@
 package com.akuvisuri.scisym.trackables;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -50,6 +51,33 @@ public class Factor {
 
     public String attrToString() {
         return this.desc;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+
+        try {
+            o.put("label", label);
+            o.put("desc", desc);
+            o.put("rep_window", rep_window);
+            switch(type) {
+                case TRACKED:
+                    JSONObject obj = range;
+                    o.put("range", obj);
+                    o.put("type", "tracked");
+                    break;
+                case MULTIPLE:
+                    JSONArray arr = values;
+                    o.put("values", arr);
+                    o.put("type", "multiple");
+                    break;
+                case BOOL:
+                    o.put("type", "bool");
+                    break;
+            }
+        } catch (JSONException e) {e.printStackTrace();}
+
+        return o;
     }
 
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.trackables.Symptom;
@@ -96,12 +97,15 @@ public class Symptoms {
         Log.d("Symptoms.java", list.toString());
     }
 
-    public static void put(Symptom s) {
-
+    public static void put(String id, Symptom s) {
+        list.put(id, s);
+        SharedPreferences.Editor editor = se.edit();
+        editor.putString("symptoms", s.toJSON().toString());
+        editor.commit();
     }
 
     public static void remove(Symptom s) {
-
+        // is this required?
     }
 
     public static void clear() {
@@ -113,4 +117,5 @@ public class Symptoms {
         editor.remove("schema");
         editor.commit();
     }
+
 }

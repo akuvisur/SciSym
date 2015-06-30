@@ -45,7 +45,7 @@ public class SymptomSelector {
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SymptomCreator.show(a);
+                SymptomCreator.show(a, LaunchScreen.schemaType);
             }
         });
 

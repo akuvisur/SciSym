@@ -109,8 +109,11 @@ public class Factors {
         Log.d(LOG, list.toString());
     }
 
-    public static void put(Factor s) {
-
+    public static void put(String id, Factor s) {
+        list.put(id, s);
+        SharedPreferences.Editor editor = se.edit();
+        editor.putString("factors", s.toJSON().toString());
+        editor.commit();
     }
 
     public static void remove(Factor s) {

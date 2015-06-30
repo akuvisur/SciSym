@@ -5,6 +5,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +49,7 @@ public class LaunchScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         // IMPORTANT
         MainUtils.setContext(getApplicationContext());
+        MainUtils.setActivity(this);
 
         if (MainUtils.DEBUG) {
             Symptoms.clear();
@@ -64,6 +67,7 @@ public class LaunchScreen extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         MainUtils.setContext(getApplicationContext());
+        MainUtils.setActivity(this);
     }
 
     @Override
@@ -84,6 +88,13 @@ public class LaunchScreen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // NEW SCHEMA CREATOR
+    public static String schemaType = "repeating";
+    public static String schemaTitle;
+    public static String dbName;
+    public static String schemaDesc;
+    public static String schemaAuthor;
 
     public void setupMenu(View view) {
         setContentView(R.layout.schema_options1);

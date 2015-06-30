@@ -1,5 +1,8 @@
 package com.akuvisuri.scisym.trackables;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Aku on 22.6.2015.
  */
@@ -45,5 +48,21 @@ public class Symptom {
 
     public boolean isSevere() {
         return severity.equals(1);
+    }
+
+    public JSONObject toJSON() {
+        JSONObject o = new JSONObject();
+        try {
+            o.put("label", label);
+            o.put("desc", desc);
+            o.put("class", _class);
+            o.put("severity", severity);
+            o.put("type", type);
+            o.put("input", input);
+            o.put("rep_window", rep_window);
+        }
+        catch (JSONException e) {e.printStackTrace();}
+
+        return o;
     }
 }
