@@ -3,19 +3,15 @@ package com.akuvisuri.scisym.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import com.akuvisuri.scisym.LaunchScreen;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
@@ -155,7 +151,7 @@ public class SymptomCreator {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             textOk = true;
             for (EditText e : editViews) {
-                if (e.getText().length() > 0) {
+                if (e.getText().length() > 2) {
                     e.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ok,0);
                 }
                 else {
@@ -163,9 +159,6 @@ public class SymptomCreator {
                     textOk = false;
                 }
             }
-            Log.d(LOG, "text: " + textOk);
-            Log.d(LOG, "radio: " + radioOk);
-
             okButton.setEnabled(textOk & radioOk);
         }
 
@@ -181,9 +174,6 @@ public class SymptomCreator {
                     radioOk = false;
                 }
             }
-            Log.d(LOG, "text: " + textOk);
-            Log.d(LOG, "radio: " + radioOk);
-
             okButton.setEnabled(textOk & radioOk);
         }
     }

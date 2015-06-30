@@ -4,20 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.akuvisuri.scisym.LaunchScreen;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
-import com.akuvisuri.scisym.trackables.Symptom;
 import com.akuvisuri.scisym.view.adapters.SymptomListAdapter;
 
 import java.util.ArrayList;

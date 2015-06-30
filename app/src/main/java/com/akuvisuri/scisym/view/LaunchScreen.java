@@ -1,48 +1,34 @@
-package com.akuvisuri.scisym;
+package com.akuvisuri.scisym.view;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.controller.SchemaBuilder;
-import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
-import com.akuvisuri.scisym.view.FactorSelector;
-import com.akuvisuri.scisym.view.SymptomSelector;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
+import com.akuvisuri.scisym.view.setup.SetupPage1;
 
 import static android.widget.AdapterView.*;
 
 
-public class LaunchScreen extends ActionBarActivity {
+public class LaunchScreen extends Activity {
     protected final static String LOG = "LaunchScreen.java";
-
-    private static LinearLayout symptomList;
-    private static LinearLayout factorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +82,12 @@ public class LaunchScreen extends ActionBarActivity {
     public static String schemaDesc;
     public static String schemaAuthor;
 
-    public void setupMenu(View view) {
-        setContentView(R.layout.schema_options1);
+    private static LinearLayout symptomList;
+    private static LinearLayout factorList;
+
+    public void SetupPage1(View view) {
+        View v = new SetupPage1(this, inflate(getApplicationContext(), R.layout.schema_options1, null)).getInstance();
+        setContentView(v);
     }
 
     public void setupPage2(View view) {

@@ -28,7 +28,7 @@
         android:layout_marginRight="64dp"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="setupMenu"
+        android:onClick="SetupPage1"
         android:drawableRight="@drawable/setup"/>
     <Button
         android:layout_width="260dp"
