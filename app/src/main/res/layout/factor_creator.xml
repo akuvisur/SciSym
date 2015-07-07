@@ -46,7 +46,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:id="@+id/factor_creator_window_layout">
 
                 <TextView
                     android:layout_width="100dp"
@@ -132,19 +133,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Boolean"
-                        android:textSize="10dp" />
+                        android:textSize="10dp"
+                        android:id="@+id/type_boolean"/>
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tracked"
-                        android:textSize="10dp" />
+                        android:textSize="10dp"
+                        android:id="@+id/type_tracked"/>
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Multiple"
-                        android:textSize="10dp" />
+                        android:textSize="10dp"
+                        android:id="@+id/type_multiple"/>
                 </RadioGroup>
             </LinearLayout>
 

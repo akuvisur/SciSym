@@ -6,12 +6,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.view.adapters.FactorListAdapter;
+import com.akuvisuri.scisym.view.factorcreator.FactorCreator;
 
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 public class FactorSelector {
     private static final String LOG = "FactorSelector.java";
 
-    public static Dialog getInstance(Activity a) {
+    public static Dialog getInstance(final Activity a) {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         LayoutInflater inflater = a.getLayoutInflater();
 
@@ -33,6 +35,15 @@ public class FactorSelector {
         }
         final FactorListAdapter adapter = new FactorListAdapter(MainUtils.c, factors);
         l.setAdapter(adapter);
+
+        Button addNew = (Button) dialogLayout.findViewById(R.id.add_factor_create);
+
+        addNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FactorCreator.show(a, LaunchScreen.schemaType);
+            }
+        });
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
