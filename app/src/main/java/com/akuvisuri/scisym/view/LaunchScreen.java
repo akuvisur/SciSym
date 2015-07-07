@@ -4,15 +4,20 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -21,8 +26,10 @@ import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.controller.SchemaBuilder;
+import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
-import com.akuvisuri.scisym.view.setup.SetupPage1;
+
+import java.util.ArrayList;
 
 import static android.widget.AdapterView.*;
 
@@ -85,9 +92,46 @@ public class LaunchScreen extends Activity {
     private static LinearLayout symptomList;
     private static LinearLayout factorList;
 
+    private static boolean textOk;
+    private static InputVerifier iv;
+    private static ArrayList<EditText> editViews;
+
+    private static boolean radioOk;
+    private static RadioVerifier rv;
+    private static RadioGroup type;
+
+    private static Button okButton;
+
     public void SetupPage1(View view) {
-        View v = new SetupPage1(this, inflate(getApplicationContext(), R.layout.schema_options1, null)).getInstance();
-        setContentView(v);
+        setContentView(R.layout.schema_options1);
+
+        editViews = new ArrayList<>();
+
+        iv = new InputVerifier();
+        rv = new RadioVerifier();
+
+        okButton = (Button) findViewById(R.id.contbutton);
+
+        editViews.add((EditText) findViewById(R.id.schema_title));
+        editViews.add((EditText) findViewById(R.id.schema_desc));
+        editViews.add((EditText) findViewById(R.id.schema_author));
+        editViews.add((EditText) findViewById(R.id.schema_id));
+
+        ((EditText) findViewById(R.id.schema_title)).addTextChangedListener(iv);
+        ((EditText) findViewById(R.id.schema_desc)).addTextChangedListener(iv);
+        ((EditText) findViewById(R.id.schema_author)).addTextChangedListener(iv);
+        ((EditText) findViewById(R.id.schema_id)).addTextChangedListener(iv);
+
+        type = (RadioGroup) findViewById(R.id.schema_type);
+        type.setOnCheckedChangeListener(rv);
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupPage2(v);
+            }
+        });
+
     }
 
     public void setupPage2(View view) {
@@ -168,7 +212,40 @@ public class LaunchScreen extends Activity {
     }
 
     public static void refreshFactorList() {
+        factorList.removeAllViews();
+        for (final Factor f : MainUtils.selectedFactors) {
+            Log.d(LOG, f.toString());
+            LayoutInflater inflater = (LayoutInflater) MainUtils.c.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            final View factorInfo = inflater.inflate(R.layout.editor_factor, null);
+            TextView label = (TextView) factorInfo.findViewById(R.id.factor_label);
+            TextView attr = (TextView) factorInfo.findViewById(R.id.factor_attr);
+            label.setText(f.toString());
+            attr.setText(f.attrToString());
+            final ImageSwitcher rightImage = (ImageSwitcher) factorInfo.findViewById(R.id.factor_right_image);
+            rightImage.setFactory(new ViewSwitcher.ViewFactory() {
+                @Override
+                public View makeView() {
+                    ImageView myView = new ImageView(MainUtils.c);
+                    myView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    myView.setLayoutParams(new ImageSwitcher.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+                    return myView;
+                }
+            });
+            rightImage.setImageResource(R.drawable.delete);
+            rightImage.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(LOG, "clicked delete factor");
+                    factorList.removeView(factorInfo);
+                    MainUtils.selectedFactors.remove(f);
+                }
+            });
 
+            factorList.addView(factorInfo);
+        }
+        factorList.invalidate();
     }
 
     public void setupDone(View view) {
@@ -194,4 +271,33 @@ public class LaunchScreen extends Activity {
         addDialog.show();
     }
 
+
+    private class InputVerifier implements TextWatcher {
+        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            textOk = true;
+            for (EditText e : editViews) {
+                if (e.getText().length() > 2) {
+                    e.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ok,0);
+                }
+                else {
+                    e.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.warning,0);
+                    textOk = false;
+                }
+            }
+            okButton.setEnabled(textOk & radioOk);
+        }
+
+        @Override public void afterTextChanged(Editable s) {}
+    }
+
+    private class RadioVerifier implements RadioGroup.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            radioOk = true;
+            okButton.setEnabled(textOk & radioOk);
+        }
+    }
 }
