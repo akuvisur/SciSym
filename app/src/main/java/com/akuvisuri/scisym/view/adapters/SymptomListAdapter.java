@@ -10,9 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.akuvisuri.scisym.R;
@@ -20,26 +18,23 @@ import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.trackables.Symptom;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by Aku on 23.6.2015.
  */
-public class SymptomListAdapter extends ArrayAdapter<String> {
+public class SymptomListAdapter extends ArrayAdapter<SymptomListAdapter.SymptomListItem> {
     private final String LOG = "SymptomListAdapter.java";
 
     private final Context context;
-    private final ArrayList<String> values;
+    private ArrayList<SymptomListItem> values = new ArrayList<>();
 
     public static ArrayList<Symptom> selection = new ArrayList<Symptom>();
 
-    public SymptomListAdapter(Context context, ArrayList<String> values) {
-        super(context, -1, values);
+    public SymptomListAdapter(Context context, ArrayList<SymptomListItem> v) {
+        super(context, -1, v);
         this.context = context;
-        this.values = values;
+        values = v;
     }
 
     public ArrayList<Symptom> getSelection() {
@@ -49,6 +44,10 @@ public class SymptomListAdapter extends ArrayAdapter<String> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.editor_symptom, parent, false);
+
+        if (!values.get(position).visible) {
+            return new LinearLayout(context);
+        }
 
         TextView label = (TextView) rowView.findViewById(R.id.symptom_label);
         TextView attr = (TextView) rowView.findViewById(R.id.symptom_attr);
@@ -66,7 +65,7 @@ public class SymptomListAdapter extends ArrayAdapter<String> {
             }
         });
 
-        Symptom thisSym = Symptoms.list.get(values.get(position));
+        Symptom thisSym = Symptoms.list.get(values.get(position).label);
         label.setText(thisSym.toString());
         label.setTextColor(Color.BLACK);
         attr.setText(thisSym.attrToString());
@@ -74,7 +73,9 @@ public class SymptomListAdapter extends ArrayAdapter<String> {
             severeImage.setImageResource(R.drawable.critical);
         }
 
-        if (MainUtils.selectedSymptoms.contains(Symptoms.list.get(thisSym.toString()))) {
+        Log.d(LOG, thisSym.toString() + selection.contains(thisSym));
+        if (MainUtils.selectedSymptoms.contains(Symptoms.list.get(thisSym.toString()))
+                | selection.contains(thisSym)) {
             rightImage.setImageResource(R.drawable.checkbox_selected);
         } else rightImage.setImageResource(R.drawable.checkbox_unselected);
 
@@ -95,6 +96,24 @@ public class SymptomListAdapter extends ArrayAdapter<String> {
             }
         });
         return rowView;
+    }
+
+    public static class SymptomListItem {
+        public boolean visible;
+        public String label;
+
+        public SymptomListItem(boolean v, String l) {
+            visible = v;
+            label = l;
+        }
+
+        public void setVisible(boolean v) {
+            visible = v;
+        }
+
+        public String toString() {
+            return label;
+        }
     }
 
 }

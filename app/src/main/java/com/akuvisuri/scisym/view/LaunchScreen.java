@@ -37,6 +37,8 @@ import static android.widget.AdapterView.*;
 public class LaunchScreen extends Activity {
     protected final static String LOG = "LaunchScreen.java";
 
+    private int currentPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class LaunchScreen extends Activity {
         Factors.init(this);
         if (SchemaBuilder.schemaOptions == null) {
             setContentView(R.layout.no_schema);
+            currentPage = 0;
         }
         else setContentView(R.layout.activity_mainview);
     }
@@ -61,6 +64,25 @@ public class LaunchScreen extends Activity {
         super.onResume();
         MainUtils.setContext(getApplicationContext());
         MainUtils.setActivity(this);
+        switch (currentPage) {
+            case 1:
+                setupPage1(null);
+                break;
+            case 2:
+                setupPage2(null);
+                break;
+            case 3:
+                setupPage3(null);
+                break;
+            default:
+                if (SchemaBuilder.schemaOptions == null) {
+                    setContentView(R.layout.no_schema);
+                    currentPage = 0;
+                }
+                else setContentView(R.layout.activity_mainview);
+
+        }
+
     }
 
     @Override
@@ -102,7 +124,7 @@ public class LaunchScreen extends Activity {
 
     private static Button okButton;
 
-    public void SetupPage1(View view) {
+    public void setupPage1(View view) {
         setContentView(R.layout.schema_options1);
 
         editViews = new ArrayList<>();
@@ -132,11 +154,11 @@ public class LaunchScreen extends Activity {
             }
         });
 
+        currentPage = 1;
     }
 
     public void setupPage2(View view) {
         setContentView(R.layout.schema_options2);
-        LinearLayout root = (LinearLayout) findViewById(R.id.schema_options2);
 
         symptomList = (LinearLayout) findViewById(R.id.schema_options2_list);
 
@@ -150,11 +172,12 @@ public class LaunchScreen extends Activity {
                 addSymptoms();
             }
         });
+
+        currentPage = 2;
     }
 
     public void setupPage3(View view) {
         setContentView(R.layout.schema_options3);
-        LinearLayout root = (LinearLayout) findViewById(R.id.schema_options3);
 
         factorList = (LinearLayout) findViewById(R.id.schema_options3_list);
 
@@ -169,6 +192,7 @@ public class LaunchScreen extends Activity {
             }
         });
 
+        currentPage = 3;
     }
 
     public static void refreshSymptomList() {

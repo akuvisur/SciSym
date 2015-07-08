@@ -57,7 +57,7 @@
             android:text="Previous"
             android:id="@+id/page1button"
             android:layout_gravity="left"
-            android:onClick="SetupPage1"
+            android:onClick="setupPage1"
             android:layout_weight="1"
             android:drawableRight="@drawable/back"/>
 

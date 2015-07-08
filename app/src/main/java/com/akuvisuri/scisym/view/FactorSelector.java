@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.akuvisuri.scisym.R;
@@ -14,6 +15,8 @@ import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.view.adapters.FactorListAdapter;
 import com.akuvisuri.scisym.view.factorcreator.FactorCreator;
+import com.akuvisuri.scisym.view.watchers.FactorSearchWatcher;
+import com.akuvisuri.scisym.view.watchers.SymptomSearchWatcher;
 
 import java.util.ArrayList;
 
@@ -23,18 +26,24 @@ import java.util.ArrayList;
 public class FactorSelector {
     private static final String LOG = "FactorSelector.java";
 
+    private static ListView factorList;
+    private static EditText searchFld;
+
     public static Dialog getInstance(final Activity a) {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         LayoutInflater inflater = a.getLayoutInflater();
 
         View dialogLayout = inflater.inflate(R.layout.factor_selector, null);
-        ListView l = (ListView) dialogLayout.findViewById(R.id.add_factor_list);
-        final ArrayList<String> factors = new ArrayList<String>();
+        factorList = (ListView) dialogLayout.findViewById(R.id.add_factor_list);
+        final ArrayList<FactorListAdapter.FactorListItem> factors = new ArrayList<FactorListAdapter.FactorListItem>();
         for (String key : Factors.list.keySet()) {
-            factors.add(key);
+            factors.add(new FactorListAdapter.FactorListItem(true, key));
         }
         final FactorListAdapter adapter = new FactorListAdapter(MainUtils.c, factors);
-        l.setAdapter(adapter);
+        factorList.setAdapter(adapter);
+
+        searchFld = (EditText) dialogLayout.findViewById(R.id.add_factor_search);
+        searchFld.addTextChangedListener(new FactorSearchWatcher(factorList));
 
         Button addNew = (Button) dialogLayout.findViewById(R.id.add_factor_create);
 

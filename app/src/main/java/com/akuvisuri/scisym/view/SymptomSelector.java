@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.view.adapters.SymptomListAdapter;
+import com.akuvisuri.scisym.view.watchers.SymptomSearchWatcher;
 
 import java.util.ArrayList;
 
@@ -22,18 +24,25 @@ import java.util.ArrayList;
 public class SymptomSelector {
     private static final String LOG = "SymptomSelector.java";
 
+    private static ListView symptomList;
+    private static EditText searchFld;
+
     public static Dialog getInstance(final Activity a) {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         LayoutInflater inflater = a.getLayoutInflater();
 
         View dialogLayout = inflater.inflate(R.layout.symptom_selector, null);
-        ListView l = (ListView) dialogLayout.findViewById(R.id.add_symptom_list);
-        final ArrayList<String> symptoms = new ArrayList<String>();
+
+        symptomList = (ListView) dialogLayout.findViewById(R.id.add_symptom_list);
+        final ArrayList<SymptomListAdapter.SymptomListItem> symptoms = new ArrayList<SymptomListAdapter.SymptomListItem>();
         for (String key : Symptoms.list.keySet()) {
-            symptoms.add(key);
+            symptoms.add(new SymptomListAdapter.SymptomListItem(true, key));
         }
         final SymptomListAdapter adapter = new SymptomListAdapter(MainUtils.c, symptoms);
-        l.setAdapter(adapter);
+        symptomList.setAdapter(adapter);
+
+        searchFld = (EditText) dialogLayout.findViewById(R.id.add_symptom_search);
+        searchFld.addTextChangedListener(new SymptomSearchWatcher(symptomList));
 
         Button addNew = (Button) dialogLayout.findViewById(R.id.add_symptom_create);
         addNew.setOnClickListener(new View.OnClickListener() {
@@ -63,5 +72,7 @@ public class SymptomSelector {
                 });
         return builder.create();
     }
+
+
 
 }
