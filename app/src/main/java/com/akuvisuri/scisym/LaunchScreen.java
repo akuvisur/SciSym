@@ -1,4 +1,4 @@
-package com.akuvisuri.scisym.view;
+package com.akuvisuri.scisym;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,6 +28,8 @@ import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.controller.SchemaBuilder;
 import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
+import com.akuvisuri.scisym.view.FactorSelector;
+import com.akuvisuri.scisym.view.SymptomSelector;
 
 import java.util.ArrayList;
 
@@ -46,17 +48,17 @@ public class LaunchScreen extends Activity {
         MainUtils.setContext(getApplicationContext());
         MainUtils.setActivity(this);
 
+        // TODO json parsing adds random quotation marks to arrays
+        // TODO so factors and symptoms cannot be fetched from sharedprefs
+
         if (MainUtils.DEBUG) {
             Symptoms.clear();
+            Factors.clear();
         }
         SchemaBuilder.init();
         Symptoms.init(this);
         Factors.init(this);
-        if (SchemaBuilder.schemaOptions == null) {
-            setContentView(R.layout.no_schema);
-            currentPage = 0;
-        }
-        else setContentView(R.layout.activity_mainview);
+
     }
 
     @Override
@@ -75,7 +77,7 @@ public class LaunchScreen extends Activity {
                 setupPage3(null);
                 break;
             default:
-                if (SchemaBuilder.schemaOptions == null) {
+                if (SchemaBuilder.schema == null) {
                     setContentView(R.layout.no_schema);
                     currentPage = 0;
                 }
@@ -274,6 +276,7 @@ public class LaunchScreen extends Activity {
 
     public void setupDone(View view) {
         // do stuff
+        SchemaBuilder.save();
         setContentView(R.layout.activity_mainview);
     }
 

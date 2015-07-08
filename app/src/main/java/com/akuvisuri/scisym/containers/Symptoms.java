@@ -100,7 +100,11 @@ public class Symptoms {
     public static void put(String id, Symptom s) {
         list.put(id, s);
         SharedPreferences.Editor editor = se.edit();
-        editor.putString("symptoms", s.toJSON().toString());
+        try {
+            JSONArray symptoms = new JSONObject(se.getString("symptoms", "")).getJSONArray("list");
+            symptoms.put(s.toJSON());
+            editor.putString("symptoms", symptoms.toString());
+        } catch (JSONException e) {}
         editor.commit();
     }
 

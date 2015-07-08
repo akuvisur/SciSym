@@ -18,10 +18,8 @@ import android.widget.TextView;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
-import com.akuvisuri.scisym.containers.Symptoms;
 import com.akuvisuri.scisym.trackables.Factor;
-import com.akuvisuri.scisym.trackables.Symptom;
-import com.akuvisuri.scisym.view.LaunchScreen;
+import com.akuvisuri.scisym.LaunchScreen;
 
 import org.json.JSONArray;
 import org.json.JSONException;

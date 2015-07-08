@@ -112,7 +112,11 @@ public class Factors {
     public static void put(String id, Factor s) {
         list.put(id, s);
         SharedPreferences.Editor editor = se.edit();
-        editor.putString("factors", s.toJSON().toString());
+        try {
+            JSONArray factors = new JSONObject(se.getString("factors", "")).getJSONArray("list");
+            factors.put(s.toJSON());
+            editor.putString("symptoms", factors.toString());
+        } catch (JSONException e) {}
         editor.commit();
     }
 

@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.akuvisuri.scisym.LaunchScreen;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.view.adapters.FactorListAdapter;
 import com.akuvisuri.scisym.view.factorcreator.FactorCreator;
 import com.akuvisuri.scisym.view.watchers.FactorSearchWatcher;
-import com.akuvisuri.scisym.view.watchers.SymptomSearchWatcher;
 
 import java.util.ArrayList;
 
