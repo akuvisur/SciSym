@@ -52,8 +52,8 @@ public class LaunchScreen extends Activity {
         // TODO so factors and symptoms cannot be fetched from sharedprefs
 
         if (MainUtils.DEBUG) {
-            Symptoms.clear();
-            Factors.clear();
+            //Symptoms.clear();
+            //Factors.clear();
         }
         SchemaBuilder.init();
         Symptoms.init(this);

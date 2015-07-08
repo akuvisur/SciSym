@@ -98,7 +98,7 @@ public class Factors {
                     }
                     SharedPreferences.Editor editor = se.edit();
                     JSONObject saved = new JSONObject();
-                    saved.put("list", facArr.toString());
+                    saved.put("list", facArr);
                     editor.putString("factors", saved.toString());
                     editor.commit();
                 } catch (Exception se) {
@@ -115,7 +115,7 @@ public class Factors {
         try {
             JSONArray factors = new JSONObject(se.getString("factors", "")).getJSONArray("list");
             factors.put(s.toJSON());
-            editor.putString("symptoms", factors.toString());
+            editor.putString("factors", new JSONObject().put("list", factors).toString());
         } catch (JSONException e) {}
         editor.commit();
     }

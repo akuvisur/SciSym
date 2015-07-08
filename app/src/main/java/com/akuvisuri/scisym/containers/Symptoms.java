@@ -86,7 +86,7 @@ public class Symptoms {
                     }
                     SharedPreferences.Editor editor = se.edit();
                     JSONObject saved = new JSONObject();
-                    saved.put("list", symArr.toString());
+                    saved.put("list", symArr);
                     editor.putString("symptoms", saved.toString());
                     editor.commit();
                 } catch (Exception se) {
@@ -103,7 +103,7 @@ public class Symptoms {
         try {
             JSONArray symptoms = new JSONObject(se.getString("symptoms", "")).getJSONArray("list");
             symptoms.put(s.toJSON());
-            editor.putString("symptoms", symptoms.toString());
+            editor.putString("symptoms", new JSONObject().put("list", symptoms).toString());
         } catch (JSONException e) {}
         editor.commit();
     }
