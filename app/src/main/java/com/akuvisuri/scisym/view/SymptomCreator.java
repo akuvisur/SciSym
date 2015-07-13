@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.akuvisuri.scisym.LaunchScreen;
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
@@ -126,7 +126,7 @@ public class SymptomCreator {
                         newS
                 );
                 MainUtils.selectedSymptoms.add(newS);
-                LaunchScreen.refreshSymptomList();
+                Launch.refreshSymptomList();
                 _this.dismiss();
             }
         });

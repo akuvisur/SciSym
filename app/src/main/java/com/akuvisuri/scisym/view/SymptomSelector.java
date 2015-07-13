@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.akuvisuri.scisym.LaunchScreen;
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
@@ -49,7 +49,7 @@ public class SymptomSelector {
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SymptomCreator.show(a, LaunchScreen.schemaType);
+                SymptomCreator.show(a, Launch.schemaType);
             }
         });
 
@@ -61,7 +61,7 @@ public class SymptomSelector {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         MainUtils.selectedSymptoms = adapter.getSelection();
-                        LaunchScreen.refreshSymptomList();
+                        Launch.refreshSymptomList();
                         dialog.dismiss();
                     }
                 })

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
-import com.akuvisuri.scisym.LaunchScreen;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,11 +50,11 @@ public class SchemaBuilder {
         // add everything
         JSONObject schema = new JSONObject();
         try {
-            schema.put("type", LaunchScreen.schemaType);
-            schema.put("author", LaunchScreen.schemaAuthor);
-            schema.put("title", LaunchScreen.schemaTitle);
-            schema.put("desc", LaunchScreen.schemaDesc);
-            schema.put("dbname", LaunchScreen.dbName);
+            schema.put("type", Launch.schemaType);
+            schema.put("author", Launch.schemaAuthor);
+            schema.put("title", Launch.schemaTitle);
+            schema.put("desc", Launch.schemaDesc);
+            schema.put("dbname", Launch.dbName);
             JSONArray symptoms = new JSONArray();
             for (Symptom s : MainUtils.selectedSymptoms) {
                 symptoms.put(s.toJSON());

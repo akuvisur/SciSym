@@ -1,9 +1,11 @@
 package com.akuvisuri.scisym;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,32 +14,38 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.containers.Symptoms;
+import com.akuvisuri.scisym.controller.Schema;
 import com.akuvisuri.scisym.controller.SchemaBuilder;
 import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
 import com.akuvisuri.scisym.view.FactorSelector;
 import com.akuvisuri.scisym.view.SymptomSelector;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.widget.AdapterView.*;
 
-
-public class LaunchScreen extends Activity {
-    protected final static String LOG = "LaunchScreen.java";
+public class Launch extends Activity {
+    protected final static String LOG = "Launch.java";
 
     private int currentPage;
 
@@ -47,9 +55,6 @@ public class LaunchScreen extends Activity {
         // IMPORTANT
         MainUtils.setContext(getApplicationContext());
         MainUtils.setActivity(this);
-
-        // TODO json parsing adds random quotation marks to arrays
-        // TODO so factors and symptoms cannot be fetched from sharedprefs
 
         if (MainUtils.DEBUG) {
             //Symptoms.clear();
@@ -66,6 +71,7 @@ public class LaunchScreen extends Activity {
         super.onResume();
         MainUtils.setContext(getApplicationContext());
         MainUtils.setActivity(this);
+
         switch (currentPage) {
             case 1:
                 setupPage1(null);
@@ -81,7 +87,10 @@ public class LaunchScreen extends Activity {
                     setContentView(R.layout.no_schema);
                     currentPage = 0;
                 }
-                else setContentView(R.layout.activity_mainview);
+                else {
+                    setContentView(R.layout.tracking);
+                    trackingView();
+                }
 
         }
 
@@ -99,11 +108,102 @@ public class LaunchScreen extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        Log.d("OPTIONS", item.getTitle().toString());
+        if (!(SchemaBuilder.schema == null)) {
+            tracking_mode = item.getTitle().toString().toLowerCase();
+            trackingView();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Please perform setup first", Toast.LENGTH_LONG).show();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // TRACKING VIEW
+    public static Calendar viewDate = Calendar.getInstance();
+
+    public static ImageButton calendarButton;
+    public static Date selectedDate;
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static TextView dateView;
+    public static TextView label;
+
+    public static RelativeLayout tracking_header;
+    public static LinearLayout tracking_content;
+
+    public static String tracking_mode = "symptoms";
+
+    public void trackingView() {
+        View v = inflate(getApplicationContext(), R.layout.tracking, null);
+
+        // CALENDAR BUTTON AND DATE SELETION BEHAVIOUR
+        selectedDate = new Date();
+        viewDate.setTime(selectedDate);
+        dateView = (TextView) v.findViewById(R.id.tracking_header_date);
+        dateView.setText(dateFormat.format(selectedDate));
+        calendarButton = (ImageButton) v.findViewById(R.id.tracking_calendarButton);
+        calendarButton.setImageDrawable(ContextCompat.getDrawable(MainUtils.c, R.drawable.calendar));
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                viewDate.set(Calendar.YEAR, year);
+                viewDate.set(Calendar.MONTH, monthOfYear);
+                viewDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDate();
+            }};
+
+        calendarButton.setOnClickListener(new OnClickListener() {
+            @Override public void onClick(View v) {new DatePickerDialog(Launch.this, date, viewDate.get(Calendar.YEAR), viewDate.get(Calendar.MONTH),
+                        viewDate.get(Calendar.DAY_OF_MONTH)).show();
+            }});
+
+        // SET GENERIC LABEL AND COLOR OPTIONS BASED ON VIEW TYPE
+        tracking_header = (RelativeLayout) v.findViewById(R.id.tracking_header);
+        label = (TextView) v.findViewById(R.id.tracking_header_label);
+
+        switch (tracking_mode) {
+            case "symptoms":
+                label.setText(tracking_mode.toUpperCase());
+                tracking_header.setBackgroundColor(getResources().getColor(R.color.scisym_blue));
+                break;
+            case "factors":
+                label.setText(tracking_mode.toUpperCase());
+                tracking_header.setBackgroundColor(getResources().getColor(R.color.scisym_green));
+                break;
+            case "settings":
+                calendarButton.setVisibility(INVISIBLE);
+                dateView.setVisibility(INVISIBLE);
+                tracking_header.setBackgroundColor(getResources().getColor(R.color.scisym_grey));
+                label.setText(tracking_mode.toUpperCase());
+                break;
+        }
+
+        LinearLayout tracking_content = (LinearLayout) v.findViewById(R.id.tracking_content);
+        // SET UI FOR TRACKING
+        if (tracking_mode.equals("symptoms")) {
+            Schema.init();
+            for (Symptom s : Schema.symptoms) {
+
+            }
+        }
+        else if (tracking_mode.equals("factors")) {
+            Schema.init();
+            for (Factor f : Schema.factors) {
+
+            }
+        }
+        // SET UI FOR SETTINGS
+        else if (tracking_mode.equals("settings")) {
+
+        }
+        setContentView(v);
+    }
+
+    private void updateDate() {
+        selectedDate = new Date(viewDate.getTimeInMillis());
+        dateView.setText(dateFormat.format(selectedDate));
+        dateView.invalidate();
     }
 
     // NEW SCHEMA CREATOR
@@ -152,6 +252,10 @@ public class LaunchScreen extends Activity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                schemaTitle = ((EditText) findViewById(R.id.schema_title)).getText().toString();
+                dbName = ((EditText) findViewById(R.id.schema_id)).getText().toString();
+                schemaDesc = ((EditText) findViewById(R.id.schema_desc)).getText().toString();
+                schemaAuthor = ((EditText) findViewById(R.id.schema_author)).getText().toString();
                 setupPage2(v);
             }
         });
@@ -160,6 +264,7 @@ public class LaunchScreen extends Activity {
     }
 
     public void setupPage2(View view) {
+
         setContentView(R.layout.schema_options2);
 
         symptomList = (LinearLayout) findViewById(R.id.schema_options2_list);
@@ -277,7 +382,7 @@ public class LaunchScreen extends Activity {
     public void setupDone(View view) {
         // do stuff
         SchemaBuilder.save();
-        setContentView(R.layout.activity_mainview);
+        trackingView();
     }
 
     public void importSchema(View view) {

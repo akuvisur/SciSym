@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.akuvisuri.scisym.LaunchScreen;
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.R;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
@@ -50,7 +50,7 @@ public class FactorSelector {
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FactorCreator.show(a, LaunchScreen.schemaType);
+                FactorCreator.show(a, Launch.schemaType);
             }
         });
 
@@ -62,7 +62,7 @@ public class FactorSelector {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         MainUtils.selectedFactors = adapter.getSelection();
-                        LaunchScreen.refreshFactorList();
+                        Launch.refreshFactorList();
                         dialog.dismiss();
                     }
                 })

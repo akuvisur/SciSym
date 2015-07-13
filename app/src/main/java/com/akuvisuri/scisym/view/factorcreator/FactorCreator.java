@@ -16,10 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.akuvisuri.scisym.R;
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.containers.Factors;
 import com.akuvisuri.scisym.containers.MainUtils;
 import com.akuvisuri.scisym.trackables.Factor;
-import com.akuvisuri.scisym.LaunchScreen;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,7 +165,7 @@ public class FactorCreator {
                         newF
                 );
                 MainUtils.selectedFactors.add(newF);
-                LaunchScreen.refreshFactorList();
+                Launch.refreshFactorList();
                 _this.dismiss();
             }
         });
