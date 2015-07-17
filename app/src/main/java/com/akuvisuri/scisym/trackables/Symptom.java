@@ -11,13 +11,13 @@ public class Symptom {
         REPEATING, SINGLE
     }
 
-    protected String label;
-    protected String desc;
-    protected String _class;
-    protected Integer severity;
-    protected Type type;
-    protected String input;
-    protected String rep_window;
+    public String label;
+    public String desc;
+    public String _class;
+    public Integer severity;
+    public Type type;
+    public String input;
+    public String rep_window;
 
 
     public Symptom(

@@ -12,12 +12,12 @@ public class Factor {
         BOOL, TRACKED, MULTIPLE
     }
 
-    protected String label;
-    protected String desc;
-    protected Type type;
-    protected String rep_window;
-    protected JSONArray values;
-    protected JSONObject range;
+    public String label;
+    public String desc;
+    public Type type;
+    public String rep_window;
+    public JSONArray values;
+    public JSONObject range;
 
     // obj contains values OR range depending on type
     public Factor(

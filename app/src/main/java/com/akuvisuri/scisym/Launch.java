@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -137,7 +138,7 @@ public class Launch extends Activity {
     public void trackingView() {
         View v = inflate(getApplicationContext(), R.layout.tracking, null);
 
-        // CALENDAR BUTTON AND DATE SELETION BEHAVIOUR
+        // CALENDAR BUTTON AND DATE SELECTION BEHAVIOUR
         selectedDate = new Date();
         viewDate.setTime(selectedDate);
         dateView = (TextView) v.findViewById(R.id.tracking_header_date);
@@ -182,20 +183,65 @@ public class Launch extends Activity {
         LinearLayout tracking_content = (LinearLayout) v.findViewById(R.id.tracking_content);
         // SET UI FOR TRACKING
         if (tracking_mode.equals("symptoms")) {
+            // each element can only be inflated once
+            View row;
             Schema.init();
             for (Symptom s : Schema.symptoms) {
+                if (s.input.equals("scale")) {
+                    row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_scale, null);
+                    row.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+
+                    TextView label = (TextView) row.findViewById(R.id.label);
+                    label.setText(s.label);
+                    tracking_content.addView(row);
+                }
+                else if (s.input.equals("text")) {
+                    row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_text, null);
+                    row.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+
+                    TextView label = (TextView) row.findViewById(R.id.label);
+                    label.setText(s.label);
+                    tracking_content.addView(row);
+                }
+                else if (s.input.equals("numeric")) {
+                    row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_numeric, null);
+                    row.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+
+                    TextView label = (TextView) row.findViewById(R.id.label);
+                    label.setText(s.label);
+                    tracking_content.addView(row);
+                }
 
             }
         }
         else if (tracking_mode.equals("factors")) {
+            View trackedRow = inflate(getApplicationContext(), R.layout.tracking_factor_tracked, null);
+            View multipleRow = inflate(getApplicationContext(), R.layout.tracking_factor_multiple, null);
+
             Schema.init();
             for (Factor f : Schema.factors) {
-
+                if (f.type.equals("multiple")) {
+                    TextView label = (TextView) multipleRow.findViewById(R.id.label);
+                    label.setText(f.label);
+                    tracking_content.addView(multipleRow);
+                }
+                else if (f.type.equals("tracked")) {
+                    TextView label = (TextView) trackedRow.findViewById(R.id.label);
+                    label.setText(f.label);
+                    tracking_content.addView(trackedRow);
+                }
             }
         }
         // SET UI FOR SETTINGS
         else if (tracking_mode.equals("settings")) {
-
+            // lets just do this like this because i dunno
+            tracking_content.addView(inflate(getApplicationContext(), R.layout.settings, null));
         }
         setContentView(v);
     }

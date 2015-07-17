@@ -17,7 +17,7 @@
     <ImageSwitcher
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/imageSwitcher"
+        android:id="@+id/value"
         android:clickable="true"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
