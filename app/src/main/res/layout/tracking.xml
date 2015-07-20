@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="fill_parent"
     tools:context=".LaunchScreen"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/tracking_view">
 
 
     <RelativeLayout
@@ -50,16 +51,11 @@
             android:paddingBottom="10dp"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/tracking_content"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/tracking_content">
+        android:layout_margin="10dp" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scrollView" />
-    </LinearLayout>
 </LinearLayout>

@@ -2,9 +2,14 @@
 <resources>
 
     <color name="scisym_blue">#ff91adff</color>
+    <color name="scisym_blue_light">#ffE9EFFF</color>
+
     <color name="scisym_green">#FF4DB870</color>
+    <color name="scisym_green_light">#FFDBF1E2</color>
     <color name="scisym_red">#FFFF4D4D</color>
     <color name="scisym_yellow">#FFFFFF4D</color>
     <color name="scisym_grey">#FFB2B2B2</color>
 
+    <color name="transparent">#80000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

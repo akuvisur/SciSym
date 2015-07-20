@@ -7,7 +7,7 @@ import org.json.JSONObject;
 /**
  * Created by Aku on 22.6.2015.
  */
-public class Factor {
+public class Factor implements Trackable {
     public enum Type {
         BOOL, TRACKED, MULTIPLE
     }
@@ -78,6 +78,10 @@ public class Factor {
         } catch (JSONException e) {e.printStackTrace();}
 
         return o;
+    }
+
+    public Factor get() {
+        return this;
     }
 
 }

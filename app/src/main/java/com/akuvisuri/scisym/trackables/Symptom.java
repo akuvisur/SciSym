@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /**
  * Created by Aku on 22.6.2015.
  */
-public class Symptom {
+public class Symptom implements Trackable {
     public enum Type {
         REPEATING, SINGLE
     }
@@ -64,5 +64,9 @@ public class Symptom {
         catch (JSONException e) {e.printStackTrace();}
 
         return o;
+    }
+
+    public Symptom get() {
+        return this;
     }
 }

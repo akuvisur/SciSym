@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -37,6 +40,11 @@ import com.akuvisuri.scisym.trackables.Factor;
 import com.akuvisuri.scisym.trackables.Symptom;
 import com.akuvisuri.scisym.view.FactorSelector;
 import com.akuvisuri.scisym.view.SymptomSelector;
+import com.akuvisuri.scisym.view.adapters.TrackingListAdapter;
+import com.akuvisuri.scisym.view.tracking.SymptomNumber;
+import com.akuvisuri.scisym.view.tracking.SymptomScale;
+import com.akuvisuri.scisym.view.tracking.SymptomText;
+import com.akuvisuri.scisym.view.tracking.Tracking;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,12 +139,18 @@ public class Launch extends Activity {
     public static TextView label;
 
     public static RelativeLayout tracking_header;
-    public static LinearLayout tracking_content;
+    ArrayList<Tracking> listItems;
+    ListView tracking_content;
+    TrackingListAdapter trackingAdapter;
 
     public static String tracking_mode = "symptoms";
 
     public void trackingView() {
+        listItems = new ArrayList<Tracking>();
+
         View v = inflate(getApplicationContext(), R.layout.tracking, null);
+
+        setContentView(v);
 
         // CALENDAR BUTTON AND DATE SELECTION BEHAVIOUR
         selectedDate = new Date();
@@ -180,14 +194,17 @@ public class Launch extends Activity {
                 break;
         }
 
-        LinearLayout tracking_content = (LinearLayout) v.findViewById(R.id.tracking_content);
         // SET UI FOR TRACKING
+
         if (tracking_mode.equals("symptoms")) {
             // each element can only be inflated once
             View row;
             Schema.init();
             for (Symptom s : Schema.symptoms) {
+
                 if (s.input.equals("scale")) {
+                    listItems.add(new SymptomScale(s));
+                    /*
                     row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_scale, null);
                     row.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
@@ -195,31 +212,34 @@ public class Launch extends Activity {
 
                     TextView label = (TextView) row.findViewById(R.id.label);
                     label.setText(s.label);
-                    tracking_content.addView(row);
+                    tracking_content.addView(row);*/
                 }
                 else if (s.input.equals("text")) {
-                    row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_text, null);
+                    listItems.add(new SymptomText(s));
+                    /*row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_text, null);
                     row.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));
 
                     TextView label = (TextView) row.findViewById(R.id.label);
                     label.setText(s.label);
-                    tracking_content.addView(row);
+                    tracking_content.addView(row);*/
                 }
                 else if (s.input.equals("numeric")) {
-                    row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_numeric, null);
+                    listItems.add(new SymptomNumber(s));
+                    /*row = View.inflate(getApplicationContext(), R.layout.tracking_symptom_numeric, null);
                     row.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));
 
                     TextView label = (TextView) row.findViewById(R.id.label);
                     label.setText(s.label);
-                    tracking_content.addView(row);
+                    tracking_content.addView(row);*/
                 }
 
             }
         }
+
         else if (tracking_mode.equals("factors")) {
             View trackedRow = inflate(getApplicationContext(), R.layout.tracking_factor_tracked, null);
             View multipleRow = inflate(getApplicationContext(), R.layout.tracking_factor_multiple, null);
@@ -227,23 +247,31 @@ public class Launch extends Activity {
             Schema.init();
             for (Factor f : Schema.factors) {
                 if (f.type.equals("multiple")) {
-                    TextView label = (TextView) multipleRow.findViewById(R.id.label);
+                    /*TextView label = (TextView) multipleRow.findViewById(R.id.label);
                     label.setText(f.label);
                     tracking_content.addView(multipleRow);
+                    */
                 }
                 else if (f.type.equals("tracked")) {
-                    TextView label = (TextView) trackedRow.findViewById(R.id.label);
+                    /*TextView label = (TextView) trackedRow.findViewById(R.id.label);
                     label.setText(f.label);
-                    tracking_content.addView(trackedRow);
+                    tracking_content.addView(trackedRow);*/
                 }
             }
         }
         // SET UI FOR SETTINGS
         else if (tracking_mode.equals("settings")) {
             // lets just do this like this because i dunno
-            tracking_content.addView(inflate(getApplicationContext(), R.layout.settings, null));
+            setContentView(R.layout.settings);
         }
-        setContentView(v);
+
+        trackingAdapter = new TrackingListAdapter(this, listItems);
+        tracking_content = (ListView) v.findViewById(R.id.tracking_content);
+        tracking_content.setAdapter(trackingAdapter);
+        tracking_content.setBackgroundColor(getResources().getColor(R.color.scisym_blue_light));
+        tracking_content.setDivider(new ColorDrawable(getResources().getColor(R.color.white)));
+        tracking_content.setDividerHeight(20);
+
     }
 
     private void updateDate() {
