@@ -31,7 +31,6 @@ public class Schema {
         symptoms = new ArrayList<>();
         factors = new ArrayList<>();
         try {
-            Log.d(LOG, "Schema:\\n" + SchemaBuilder.schema.toString());
             title = SchemaBuilder.schema.getString("title");
             desc = SchemaBuilder.schema.getString("desc");
             author = SchemaBuilder.schema.getString("author");

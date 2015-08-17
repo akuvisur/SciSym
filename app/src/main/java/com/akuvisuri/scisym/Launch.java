@@ -267,6 +267,7 @@ public class Launch extends Activity {
 
         trackingAdapter = new TrackingListAdapter(this, listItems);
         tracking_content = (ListView) v.findViewById(R.id.tracking_content);
+        trackingAdapter.setParent(tracking_content);
         tracking_content.setAdapter(trackingAdapter);
         tracking_content.setBackgroundColor(getResources().getColor(R.color.scisym_blue_light));
         tracking_content.setDivider(new ColorDrawable(getResources().getColor(R.color.white)));
