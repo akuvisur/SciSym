@@ -140,7 +140,7 @@ public class Launch extends Activity {
 
     public static RelativeLayout tracking_header;
     ArrayList<Tracking> listItems;
-    ListView tracking_content;
+    public static ListView tracking_content;
     TrackingListAdapter trackingAdapter;
 
     public static String tracking_mode = "symptoms";

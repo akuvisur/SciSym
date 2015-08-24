@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.akuvisuri.scisym.Launch;
 import com.akuvisuri.scisym.R;
+import com.akuvisuri.scisym.view.adapters.TrackingListAdapter;
 
 import java.util.ArrayList;
 
@@ -32,39 +34,49 @@ public class ScaleButton extends ImageButton implements View.OnClickListener {
         selected = s;
         setImage(s);
         for (ScaleButton b : buttonGroup) {
-            if (!b.label.equals(label)) b.setImage(false);
+            Log.d("sc", b.label + " : " + label);
+            if (!label.equals(b.label)) {
+                Log.d("sc", "hit");
+                b.setImage(false);
+            }
         }
+
+        for (int i = 0; i < Launch.tracking_content.getChildCount(); i++) {
+            Log.d("sc", "get view at " + i);
+            ((TrackingListAdapter) Launch.tracking_content.getAdapter()).getView(i, Launch.tracking_content.getChildAt(i), Launch.tracking_content);
+        }
+
     }
 
-    public void setImage(boolean selected) {
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setImage(boolean _selected) {
+        selected = _selected;
         // TODO these things dont update (redraw) properly like a radiobutton should
-        Log.d("ScaleButton", "setImage + " + label + " + " + selected);
         switch (label) {
             case "none":
                 if (selected) setImageResource(R.drawable.scale_none_selected);
                 else setImageResource(R.drawable.scale_none);
-                redraw();
                 break;
             case "mild":
                 if (selected) setImageResource(R.drawable.scale_mild_selected);
                 else setImageResource(R.drawable.scale_mild);
-                redraw();
                 break;
             case "severe":
-                Log.d("ScaleButton", "uliuli");
-                if (selected) setImageResource(R.drawable.scale_severe_selected);
-                else setImageResource(R.drawable.scale_severe);
-                redraw();
+                if (selected) {setImageResource(R.drawable.scale_severe_selected);}
+                else {setImageResource(R.drawable.scale_severe);}
                 break;
         }
-    }
 
-    private void redraw() {
-        parent.invalidate();
+        //Launch.tracking_content.invalidate();
     }
 
     @Override
     public void onClick(View v) {
         if (selected) setSelected(false); else setSelected(true);
+        //Launch.tracking_content.invalidateViews();
     }
 }

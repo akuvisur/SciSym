@@ -65,37 +65,37 @@ public class TrackingListAdapter extends ArrayAdapter<Tracking> {
                     v = MainUtils.a.getLayoutInflater().inflate(R.layout.tracking_symptom_scale, null);
                     label = (TextView) v.findViewById(R.id.label);
                     label.setText(s.label);
-                    /*
-                    image = (ImageSwitcher) v.findViewById(R.id.value);
-                    image.setFactory(new ViewSwitcher.ViewFactory() {
-                        @Override
-                        public View makeView() {
-                            ImageView myView = new ImageView(MainUtils.c);
-                            myView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            myView.setLayoutParams(new ImageSwitcher.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT));
-                            return myView;
-                        }
-                    });
-                    image.setImageResource(R.drawable.delete);
-                    */
 
                     none = (ScaleButton) v.findViewById(R.id.scale_none);
-                    none.setImageResource(R.drawable.scale_none);
-                    none.setRequired(buttonGroup, "none", parentView);
-
                     mild = (ScaleButton) v.findViewById(R.id.scale_mild);
-                    mild.setImageResource(R.drawable.scale_mild);
-                    mild.setRequired(buttonGroup, "mild", parentView);
-
                     severe = (ScaleButton) v.findViewById(R.id.scale_severe);
-                    severe.setImageResource(R.drawable.scale_severe);
-                    severe.setRequired(buttonGroup, "severe", parentView);
+
 
                     buttonGroup.add(none);
                     buttonGroup.add(mild);
                     buttonGroup.add(severe);
+
+                    none.setRequired(buttonGroup, "none", parentView);
+                    mild.setRequired(buttonGroup, "mild", parentView);
+                    severe.setRequired(buttonGroup, "severe", parentView);
+
+                    if (none.isSelected()) {
+                        Log.d("adapter", "none was selected");
+                        none.setImageResource(R.drawable.scale_none_selected);
+                    }
+                    else none.setImageResource(R.drawable.scale_none);
+
+                    if (mild.isSelected()) {
+                        Log.d("adapter", "mild was selected");
+                        mild.setImageResource(R.drawable.scale_mild_selected);
+                    }
+                    else mild.setImageResource(R.drawable.scale_mild);
+
+                    if (severe.isSelected()) {
+                        Log.d("adapter", "severe was selected");
+                        severe.setImageResource(R.drawable.scale_severe_selected);
+                    }
+                    else severe.setImageResource(R.drawable.scale_severe);
 
                     return v;
                 case "text":
